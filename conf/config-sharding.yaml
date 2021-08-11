@@ -1,0 +1,30 @@
+schemaName: test
+
+dataSources:
+  test_db:
+    url: jdbc:mysql://localhost:3306/test_db
+    username: admin
+    password:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    minPoolSize: 1
+rules:
+  - !SHARDING
+    tables:
+      test_table:
+        actualDataNodes: test_db.test_table
+        databaseStrategy:
+          none:
+        tableStrategy:
+          none:
+        keyGenerateStrategy:
+          column: test_column
+          keyGeneratorName: snowflake
+
+    keyGenerators:
+      snowflake:
+        type: SNOWFLAKE
+        props:
+          worker-id: 123
